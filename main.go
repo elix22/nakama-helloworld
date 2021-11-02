@@ -36,6 +36,12 @@ func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runti
 		return err
 	}
 
+	// Register the RPC function.
+	if err := initializer.RegisterRpc("get_pokemon", GetPokemon); err != nil {
+		logger.Error("Unable to register: %v", err)
+		return err
+	}
+
 	logger.Info("Eli Plugin loaded in '%d' msec.", time.Now().Sub(initStart).Milliseconds())
 	return nil
 }
